@@ -40,50 +40,10 @@ Nasz słownik (dictionary) zostanie utworzony z unikalnych słów:
 [‘Jan’, ‘lubi’, ‘jeździć’, ‘na’, ‘rowerze’, ‘nie’, ‘Jazda’, ‘Maria’, ‘jest’, ‘frajdą’]
 
 Macierz  M:
-
-Jan
-lubi
-jeździć
-na
-rowerze
-nie
-jazda
-Maria
-jest
-frajdą
-D1
-1
-1
-1
-1
-1
-0
-0
-0
-0
-0
-D2
-0
-1
-1
-1
-1
-1
-0
-1
-0
-0
-D3
-0
-0
-0
-1
-1
-0
-1
-0
-1
-1
+			Jan		lubi	jeździć		na	rowerze		nie		jazda		Maria		jest	frajdą
+D1		1			1			1					1		1					0			0				0				0			0
+D2		0			1			1					1		1					1			0				1				0			0
+D3		0			0			0					1		1					0			1				0				1			1
 Teraz słowo może być reprezentowane przez wektor utworzony z kolumny wartości pod nim zawartej.
 Np. „Jan” : [1,0,0]
 
@@ -99,28 +59,18 @@ TF-IDF działa w ten sposób, że „kara” słowa powszechnie znane, a wyróż
 Rozważmy dokumenty:
 
 Dokument 1.
-Określenie
-Ilość wystąpień
-Orange
-4
-is
-2
-very
-1
-tasty
-1
+Określenie  	Ilość wystąpień
+Orange      	4
+is          	2
+very        	1
+tasty       	1
 
 Dokument 2.
-Określenie
-Ilość wystąpień
-Apple
-4
-is
-1
-very
-2
-tasty
-1
+Określenie  	Ilość wystąpień
+Apple      		4
+is          	1
+very        	2
+tasty       	1
 
 
 Zdefiniujmy odpowiednie współczynniki:
