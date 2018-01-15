@@ -131,4 +131,9 @@ def conjugation_step(rodzaj_str: str, table, liczba, stopien, lemko_word):
 
 
 word = "zielony"
+# do_next_word(word)
+# words = ["dąb", "stać", "koło", "droga"]
 do_next_word(word)
+
+# TODO
+# obsługa czasownika i rzeczownika
