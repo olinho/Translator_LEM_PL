@@ -1,0 +1,136 @@
+  "abstrakcyjny": {
+    "deklinacja": {
+      "meski": {
+        "najwyzszy": {
+          "0": {
+            "0": "najbardziej abstrakcyjny",
+            "1": "najbardziej abstrakcyjnego",
+            "2": "najbardziej abstrakcyjnemu",
+            "3": "najbardziej abstrakcyjnego",
+            "4": "najbardziej abstrakcyjnym",
+            "5": "najbardziej abstrakcyjnym",
+            "6": "najbardziej abstrakcyjny"
+          },
+          "1": {
+            "0": "najbardziej abstrakcyjni",
+            "1": "najbardziej abstrakcyjnych",
+            "2": "najbardziej abstrakcyjnym",
+            "3": "najbardziej abstrakcyjnych",
+            "4": "najbardziej abstrakcyjnymi",
+            "5": "najbardziej abstrakcyjnych",
+            "6": "najbardziej abstrakcyjni"
+          }
+        },
+        "rowny": {
+          "0": {
+            "0": "abstrakcyjny",
+            "1": "abstrakcyjnego",
+            "2": "abstrakcyjnemu",
+            "3": "abstrakcyjnego",
+            "4": "abstrakcyjnym",
+            "5": "abstrakcyjnym",
+            "6": "abstrakcyjny"
+          },
+          "1": {
+            "0": "abstrakcyjni",
+            "1": "abstrakcyjnych",
+            "2": "abstrakcyjnym",
+            "3": "abstrakcyjnych",
+            "4": "abstrakcyjnymi",
+            "5": "abstrakcyjnych",
+            "6": "abstrakcyjni"
+          }
+        },
+        "wyzszy": {
+          "0": {
+            "0": "bardziej abstrakcyjny",
+            "1": "bardziej abstrakcyjnego",
+            "2": "bardziej abstrakcyjnemu",
+            "3": "bardziej abstrakcyjnego",
+            "4": "bardziej abstrakcyjnym",
+            "5": "bardziej abstrakcyjnym",
+            "6": "bardziej abstrakcyjny"
+          },
+          "1": {
+            "0": "bardziej abstrakcyjni",
+            "1": "bardziej abstrakcyjnych",
+            "2": "bardziej abstrakcyjnym",
+            "3": "bardziej abstrakcyjnych",
+            "4": "bardziej abstrakcyjnymi",
+            "5": "bardziej abstrakcyjnych",
+            "6": "bardziej abstrakcyjni"
+          }
+        }
+      },
+      "nijaki": {
+        "najwyzszy": {
+          "0": {
+            "0": "najbardziej abstrakcyjne",
+            "1": "najbardziej abstrakcyjnego",
+            "2": "najbardziej abstrakcyjnemu",
+            "3": "najbardziej abstrakcyjne",
+            "4": "najbardziej abstrakcyjnym",
+            "5": "najbardziej abstrakcyjnym",
+            "6": "najbardziej abstrakcyjne"
+          }
+        },
+        "rowny": {
+          "0": {
+            "0": "abstrakcyjne",
+            "1": "abstrakcyjnego",
+            "2": "abstrakcyjnemu",
+            "3": "abstrakcyjne",
+            "4": "abstrakcyjnym",
+            "5": "abstrakcyjnym",
+            "6": "abstrakcyjne"
+          }
+        },
+        "wyzszy": {
+          "0": {
+            "0": "bardziej abstrakcyjne",
+            "1": "bardziej abstrakcyjnego",
+            "2": "bardziej abstrakcyjnemu",
+            "3": "bardziej abstrakcyjne",
+            "4": "bardziej abstrakcyjnym",
+            "5": "bardziej abstrakcyjnym",
+            "6": "bardziej abstrakcyjne"
+          }
+        }
+      },
+      "zenski": {
+        "najwyzszy": {
+          "0": {
+            "0": "najbardziej abstrakcyjna",
+            "1": "najbardziej abstrakcyjnej",
+            "2": "najbardziej abstrakcyjnej",
+            "3": "najbardziej abstrakcyjną",
+            "4": "najbardziej abstrakcyjną",
+            "5": "najbardziej abstrakcyjnej",
+            "6": "najbardziej abstrakcyjna"
+          }
+        },
+        "rowny": {
+          "0": {
+            "0": "abstrakcyjna",
+            "1": "abstrakcyjnej",
+            "2": "abstrakcyjnej",
+            "3": "abstrakcyjną",
+            "4": "abstrakcyjną",
+            "5": "abstrakcyjnej",
+            "6": "abstrakcyjna"
+          }
+        },
+        "wyzszy": {
+          "0": {
+            "0": "bardziej abstrakcyjna",
+            "1": "bardziej abstrakcyjnej",
+            "2": "bardziej abstrakcyjnej",
+            "3": "bardziej abstrakcyjną",
+            "4": "bardziej abstrakcyjną",
+            "5": "bardziej abstrakcyjnej",
+            "6": "bardziej abstrakcyjna"
+          }
+        }
+      }
+    }
+  }
