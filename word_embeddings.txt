@@ -1,0 +1,260 @@
+I. Word embeddings
+Teksty zapisane w postaci tradycyjnych stringów nie nadają się do przetwarzania w działach sztucznej inteligencji takich jak klasyfikacja, klasteryzacja, czy translacja maszynowa. Aby zwiększyć efektywność procesów przetwarzających tekstu stosuje się metody, które zamieniają tekst na liczby.
+Komputer potrafi porównać teksty i powiedzieć, czy są one jednakowe. Przy przetwarzaniu tekstów wymagamy jednak rozwiązywania bardziej złożonych problemów. Niech za przykład posłuży wyszukiwarka google. Jak to się dzieje, że kiedy szukamy informacji o Mariuszu Czerkawskim to przeglądarka zwraca również wyniki związane z NHLem? Skąd przeglądarka wie, że słowo „orange” w zdaniu „Orange is a tasty fruit” oznacza owoc, a nie firmę?
+Odpowiedź tkwi w sposobie reprezentacji danych. Reprezentacja ta pozwala zachować znaczenie, relacje semantyczne w różnych kontekstach. I wszystko to dzieje się z wykorzystaniem wektorów słów (word embeddings) lub numerycznej reprezentacji, która ułatwia komputerom przetwarzanie takich danych.
+Poniżej przedstawię różne metody wektorowej reprezentacji słów, a także sposób ich implementacji.
+
+W najprostszych słowach wektory słowne są tekstem przekształconym do postaci numerycznej. Możemy mieć różne reprezentacji numeryczne. Zastanówmy się jednak, w jakim celu dokonuje się takich przekształceń?
+Jak się okazuje, algorytmy uczenia maszynowego i niemalże wszystkie architektury deep learningu są niezdolne do przetwarzania stringów w ich surowej formie. Potrzebują one liczb, z którymi znacznie lepiej sobie radzą. Do tego taka reprezentacja pozwala skompresować dane.
+
+Formalnie format wektorów słownych (word embeddings) dokonuje przekształcenia słowa na wektor, używając słownika.
+Weźmy przykładowe zdanie: „Słowa mogą mieć wiele znaczeń”.
+Słowem jest „Słowa” lub „znaczeń”.
+Słownik (dictionary) może być listą unikalnych słów w zdaniu: [‘Słowa’, ‘mogą’, ‘mieć’, ‘wiele’, znaczeń’].
+Każde słowo może być reprezentowane jako wektor, wskazujący pozycję słowa w zdaniu. Jeśli słowo na danej pozycji występuję – stawiamy 1, jeśli nie – 0.
+Dla przykładu, dla słowa „wiele” : [0,0,0,1,0].
+Dla słowa „mieć” : [0,0,1,0,0].
+Jest to bardzo prosta metoda reprezentacji słowa w postaci wektora. Przyjrzyjmy się innym metodom.
+
+II. Różne typy word embeddings :
+Możemy wyróżnić dwie główne kategorie:
+1. Częstotliwościowe (frequency) reprezentacje
+2. Przewidywaniowe (prediction) reprezentacje
+
+1. Frequency based Embedding
+a) Count Vector 
+b) TF-IDF Vector
+c) Co-Occurrence Vector
+
+1.a. Count Vector
+Rozważmy korpus C w dokumentach D [d1,d2,dE] i N unikatowych tokenów, wyciągniętych z korpusu C.
+N tokenów utworzy nasz słownik, a nasz Count Vector, oznaczający macierz M, będzie rozmiaru ExN.
+Każdy wiersz w macierzy M zawiera częstotliwość występowania tokena w dokumencie D(i).
+
+Rozważmy przykład:
+D1: Jan lubi jeździć na rowerze.
+D2: Maria nie lubi jeździć na rowerze.
+D3: Jazda na rowerze jest frajdą.
+
+Nasz słownik (dictionary) zostanie utworzony z unikalnych słów:
+[‘Jan’, ‘lubi’, ‘jeździć’, ‘na’, ‘rowerze’, ‘nie’, ‘Jazda’, ‘Maria’, ‘jest’, ‘frajdą’]
+
+Macierz  M:
+
+Jan
+lubi
+jeździć
+na
+rowerze
+nie
+jazda
+Maria
+jest
+frajdą
+D1
+1
+1
+1
+1
+1
+0
+0
+0
+0
+0
+D2
+0
+1
+1
+1
+1
+1
+0
+1
+0
+0
+D3
+0
+0
+0
+1
+1
+0
+1
+0
+1
+1
+Teraz słowo może być reprezentowane przez wektor utworzony z kolumny wartości pod nim zawartej.
+Np. „Jan” : [1,0,0]
+
+Rozważmy jednak sytuację, gdzie mamy do czynienia z tysiącami zdań. Reprezentacja słów za pomocą powyższej metody staje się mało efektywna.
+
+1.b. TF-IDF vectorization
+Jest to metoda opierająca swoje działanie o sprawdzanie częstotliwości występowania danego słowa.
+Rozważamy ilość wystąpień słowa, ale na przestrzeni całego korpusu.
+Jaka jest z tego korzyść? Jak wiemy, są słowa które pojawiają się często, niezależnie od typu tekstu (dokumentu), np. i, ponieważ, gdy.
+Są jednak słowa, które dla danej tematyki pojawią się częściej - „orange” w tekście o owocach. Celem jest więc przypisanie mniejszej wagi, dla słów powszechnie znanych i często używanych, a większej – dla rzadziej występujących w większych ilościach.
+TF-IDF działa w ten sposób, że „kara” słowa powszechnie znane, a wyróżnia np. „orange”.
+
+Rozważmy dokumenty:
+
+Dokument 1.
+Określenie
+Ilość wystąpień
+Orange
+4
+is
+2
+very
+1
+tasty
+1
+
+Dokument 2.
+Określenie
+Ilość wystąpień
+Apple
+4
+is
+1
+very
+2
+tasty
+1
+
+
+Zdefiniujmy odpowiednie współczynniki:
+TF – ilość wystąpień określenia ‘t’ w dokumencie/ilość określeń w dokumencie
+
+TF(is, Document1) = 2/8
+TF(is, DOcument2) = 1/8
+Współczynik ten powinien być więc wysoki dla niektórych dokumentów, dla określeń tematycznych - ‘orange’.
+
+IDF = log(N/n) , gdzie
+N – ilość dokumentów
+n – ilość dokumentów, w których występuje określenie ‘t’
+IDF(is) = log(2/2) = 0
+IDF(Orange) = log(2/1) = 0.301
+
+TF-IDF(is, Document1) = (2/8) * (0) = 0
+TF-IDF(is, Document2) = (1/8) * (0) = 0
+TF-IDF(Orange, Document2) = (4/8) * (0.301) = 0.15
+
+Jak widzimy słowo „Orange” zostało uznane za ważne. Natomiast słowo „is” zostało obarczone karą, ponieważ występuje w wielu dokumentach.
+
+Metoda ta pozwala odfiltrować ze zbioru dokumentów ‘D’ słowa, które niosą ze sobą istotną informację. Dzięki temu dla dużej ilość dokumentów i słów, możemy wybrać do przetwarzania tekstu, np. za pomocą metody Count Vector, tylko te słowa lub określenia, które są specyficzne dla danej tematyki.
+
+1.c. Co-Occurrence Matrix (macierz współwystępowania) z oknem kontekstu o stałej wielkości
+
+Pomysł zrodził się z obserwacji, że słowa niosą ze sobą treść zależnie od kontekstu, w jakim się znajdują.
+Przykładowo 
+„O ósmej gramy mecz. Załóżcie zielone koszulki.”
+„Załóż koszulkę, żeby kartka nie zmokła”.
+Wiemy z kontekstu, że w pierwszym przykładzie mowa jest o koszulkach odznaczających graczy na boisku.
+Natomiast w drugim przypadku mamy do czynienia z koszulką foliową na kartkę papieru.
+Skąd taka wiedza? Wyciągnięta na podstawie słów z otoczenia.
+
+Wyróżnijmy elementy występujące w tej metodzie, służące do opisu środowiska:
+a) Co-occurrence: dla wybranych słów w1, w2 jest to ilość wystąpień w oknie kontekstowym (Context Window) obydwu z tych słów.
+b) Context Window: dla danego słowa określa słówa występujących przed i po w określonej ilości.
+
+Dla przykładu dla okna kontekstowego okalającego, o wielkości 2, dla słowa ‘jest’
+Martyna poszła do szkoły i jest bardzo dumna z tego faktu.
+
+Poniżej przedstawiony jest przykład jednej z wartości macierzy – co-occurrence matrix:
+
+Korpus: Kot lubi mleko. Człowiek lubi mleko. Mleko jest smaczne.
+Dla context-window o wielkości 2, i słów w1= mleko, w2 = lubi, bez uwzględniania wielkości liter otrzymamy wartość : N(mleko,lubi) = 4.
+„lubi mleko”
+„mleko. Czlowek lubi”
+„lubi mleko”
+„lubi mleko. Mleko”
+
+N(człowiek, smaczne) = 0
+
+Rozważmy teraz korpus z V unikalnymi słowami. Dla dużego V użycie co-occurrence matrix staje się nieefektywne i rzadko spotykane w praktyce. Jeśli nawet usuniemy pewne mało istotne określenia, jak np. znaki interpunkcyjne, to wciąż macierz będzie zbyt dużych rozmiarów, aby osiągnąć zadowalającą wydajność.
+
+Należy jednak pamiętać, że co-occurrence matrix nie jest wektorem reprezentującym słowa. Jest to tylko dekompozycja zdania na części składowe i dopiero złożenie tych części składowych pozwoli uzyskać reprezentację wektorową.
+
+W przypadku, gdy z naszej macierzy wybierzemy tylko jej część, ograniczając reprezentacje słów : VxK, to będziemy mogli zapisywać słowa  w postaci wektorów o rozmiarze K. Rozmiar ten pozwoli przechować ciągle dużą część informacji o słowie.
+
+Rozważmy metodę analizy statycznej – analizę główny składowych (PCA).
+Za jej pomocą możemy rozebrać macierz kookurencji na trzy macierze. U,S,V, gdzie U i V są ortogonalnymi macierzami. Iloczyn skalarny wektorów U i S da nam reprezentację wektorową dla słowa, a V – reprezentację wektorową dla kontekstu.
+
+Zalety co-occurrence matrix:
+- pozwala przechowywać informację o semantycznych zależnościach między słowami : król i królowa będzie bliżej siebie niż król i piłkarz.
+- używa metody SVD (metoda rozbioru macierzy na trzy składowe, które pozwala zredukować jej rozmiary), która tworzy bardziej odpowiednią reprezentację słów w postaci wektorów niż metody konkurencyjne
+- używa faktoryzacji, co zwiększa wydajność
+- wystarczy wykonać obliczenia jeden raz, aby móc z niej korzystać. Jest szybsza od konkurencyjnych metod.
+
+Wady co-occurrence matrix:
+- wymaga dużej pamięci do przechowania macierzy.
+Problem ten jednak może być rozwiązany, poprzez zastosowanie odpowiednich metod – np. klastry Hadoop (metoda pozwalająca przyspieszyć obliczenia, wykorzystując sieć komputerów).
+
+2. Prediction based Vector:
+
+Jak do tej pory omówiliśmy tylko deterministyczne metody do tworzenia wektorów reprezentujących słowa. Jednak te metody są ograniczone. Powstałą jednak metoda word2vect stworzona przez Mitolov’a. Prowadzi ona do reprezentacji słów w formie, która jest odpowiednia do zadań związanych z przetwarzaniem języka naturalnego (NLP).
+W zadaniach tego typu możemy wskazać, jak silnie są związane ze sobą słowa np. ‘piłkarz’, ‘sport’ blisko siebie. 
+Innym przykładem zastosowania jest możliwość wskazania analogicznych zależności zależności między parami słów, np. król – królowa, mężczyzna – kobieta.
+
+Metoda word2vect nie jest pojedynczym algorytmem, lecz złożeniem dwóch technik: CBOW (Continuous bag of words) i Skip-gram model. 
+Obie te metody opierają swoje działanie o sieci neuronowe, które odwzorowują słowa na zmienne docelowe, które są również słowami. Każda z nich uczy się wag, które w późniejszym etapie są wykorzystywane jako wartości wektora reprezentującego słowo (word vector representation).
+
+
+2.1. CBOW (Continuous bag of words):
+
+Jego zadaniem jest przewidywanie prawdopodobieństwa wystąpienia słowa, mając zadany kontekst.
+Kontekst może być słowem lub zestawem słów.
+
+Rozważmy korpus C:
+„Pies skacze energicznie starając się dosięgnąć kość zawieszoną na sznurku”.
+Po analizie powyższego zdania możemy stwierdzić, że istnieje prawdopodobieństwo, że po słowie „kość” wystąpi słowo „zawieszona”. 
+W modelu więc będziemy rozważać wejścia – wyjścia. Wejście to słowo poprzedzające a wyjście to słowo następne
+
+Rozważmy proces tworzenia modelu CBOW.
+Każde słowo będziemy reprezentować za pomocą wektora 1xV, gdzei V = 10 w tym wypadku (10 słów).
+Np. para: wejście=‘Pies’, wyjście=’skacze’ będzie reprezentowana przez wektor = [1,0,0,0,0,0,0,0,0,0]
+
+Tworzenie modelu:
+a) warstwa wejściowa i wyjściowa będą reprezentowane przez wektory 1xV (V=10)
+b) mamy dwa zestawy wag: pomiędzy warstwą wejściową, a ukrytą; pomiędzy warstwą ukrytą, a wyjściową
+Rozmiary macierzy:
+pierwsza macierz: warstwa wejściowa – ukryta: [VxN]
+druga macierz: warstwa ukryta – wyjściowa: [NxV]
+N – rozmiar wybrany przez nas do reprezentacji słów. Może być dowolny.
+N określa również liczbę neuronów w ukrytej warstwie.
+c) brak liniowej funkcji aktywacyjnej pomiędzy warstwami
+d) wejście jest mnożone przez wagi pierwszej macierzy; odpowiada to skopiowaniu niektórych wag z pierwszej macierzy
+d) mnożymy wejścia do warstwy ukrytej przez drugą macierz i otrzymujemy wyjście
+e) różnica pomiędzy wartością otrzymaną, a oczekiwaną jest rozgłaszana w sieci; wprowadzane są korekty wag
+f) kiedy trening zostanie skończony, wagi pomiędzy warstwą ukrytą i wyjściową stają się wektorem reprezentującym słowo
+
+Zalety CBOW:
+- generalnie, są bardziej efektywne od deterministycznych metod
+- nie wymagają wiele pamięci
+
+Wady CBOW:
+- CBOW przechowuje średnią dla różnych kontekstów dla danego słowa, przez co słowo „orange” w odniesieniu do owoców, jak też do firmy zostanie reprezentowane jako średnia dla wartości obliczonych w tych kontekstach. Jest to pięta achillesowa metody.
+- jeśli nie zoptymalizujemy procesu uczenia, to może trwać w nieskończoność
+
+
+
+2.2. Skip-gram model
+
+Ma podobną topologię jak CBOW. Działa odwrotnie do CBOW’a. Jego zadaniem jest predykcja kontekstu na podstawie słowa.
+Wagi macierzy pomiędzy warstwą wejściową, a ukrytą są wykorzystywane do stworzenia reprezentacji wektorowej słowa po treningu.
+
+Zalety:
+Może przechowywać wiele kontekstów dla słowa.
+
+
+
+
+
+
+
+Bibliografia:
+https://www.analyticsvidhya.com/blog/2017/06/word-embeddings-count-word2veec/ [28.11.2017]
+https://www.analyticsvidhya.com/blog/2017/05/neural-network-from-scratch-in-python-and-r/ [29.11.2017] [Sieci neuronowe – implementacja  w pythonie]
+
+
